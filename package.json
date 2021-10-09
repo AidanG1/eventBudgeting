@@ -15,6 +15,7 @@
     "core-js": "^3.15.1",
     "matrix-js-sdk": "^14.0.0-rc.2",
     "nuxt": "^2.15.7",
+    "olm": "https://packages.matrix.org/npm/olm/olm-3.2.1.tgz",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {

@@ -15,13 +15,18 @@ export default {
     CurrentRoom,
   },
   data() {
-    return {
-      client: $store.state.client,
-    };
+    return {};
   },
   created() {
-    let client = this.client;
-    client.startClient();
+    const hs_split = this.$store.state.homeserver.split("https://")[1];
+    console.log(hs_split);
+    const client = sdk.createClient({
+      baseUrl: "https://matrix.org",
+      accessToken: this.$store.state.token,
+      userId: "@" + this.$store.state.username + ":" + hs_split,
+    });
+    // client.initCrypto()
+    client.startClient({ initialSyncLimit: 10 });
     client.once("sync", function (state, prevState, res) {
       console.log(state); // state will be 'PREPARED' when the client is ready to use
     });
@@ -30,14 +35,17 @@ export default {
     });
     var rooms = client.getRooms();
     let room_state = [];
-    rooms.forEach((room) => {
-      room_state.push({
-        icon: "mdi-chart-bubble",
-        title: room.name,
-        to: "/r/" + room.roomId.toString(),
+    rooms
+      .forEach((room) => {
+        room_state.push({
+          icon: "mdi-chart-bubble",
+          title: room.name,
+          roomId: room.roomId,
+        });
+      })
+      .then((response) => {
+        this.$store.state.rooms = room_state;
       });
-    });
-    this.$store.state.rooms = room_state;
   },
   methods: {},
 };

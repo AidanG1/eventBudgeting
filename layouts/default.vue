@@ -11,9 +11,9 @@
         <v-list-item
           v-for="(item, i) in $store.state.rooms"
           :key="i"
-          :to="item.to"
           router
           exact
+          @click="viewRoom(item.roomId)"
         >
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
@@ -24,11 +24,7 @@
         </v-list-item>
       </v-list>
       <h3 v-else>
-        <v-list-item
-          to="/login"
-          router
-          exact
-        >
+        <v-list-item to="/login" router exact>
           <v-list-item-content>
             <v-list-item-title v-text="'Login to see your rooms'" />
           </v-list-item-content>
@@ -78,6 +74,12 @@ export default {
       rightDrawer: false,
       title: "MatrixBudget",
     };
+  },
+  methods: {
+    viewRoom(roomId) {
+      this.$store.state.current_room = roomId;
+      this.$route.push({ name: "rooms" });
+    },
   },
 };
 </script>
