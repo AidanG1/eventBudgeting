@@ -83,8 +83,6 @@ export default {
         })
         .then((response) => {
           this.$store.commit("change_token", response.access_token);
-          console.log(this.homeserver)
-          console.log(this.username)
           this.$store.commit("change_username", this.username);
           this.$store.commit("change_homeserver", this.homeserver);
           this.$router.push({ name: "rooms" });

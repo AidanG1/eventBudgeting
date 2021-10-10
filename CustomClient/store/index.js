@@ -17,4 +17,7 @@ export const mutations = {
     change_homeserver(state, homeserver,) {
         state.homeserver = homeserver
     },
+    add_room(state, room) {
+        state.rooms.push(room)
+    }
 }
